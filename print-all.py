@@ -1,10 +1,11 @@
+#Python 3
 import os
 
-base_folder = raw_input("Type in your base folder:\n") #use input() for python 3
+base_folder = input("Type in your base folder:\n")
 all_folders = []
 print_jobs_devided = [[1,2,3,4,5], [1,2,3,4,5]] # each list max 15
 
-print "the base is: ", base_folder #use () for python 3
+print ("the base is: ", base_folder)
 
 #add to print queue
     #add first 15
