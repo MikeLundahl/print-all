@@ -1,8 +1,7 @@
-#import os system
+import os
 
-base_folder = raw_input("Base folder\n") #use input() for python 3
-all_folders = [base_folder, "folder 2", "folder 3"]
-print_jobs_all = None
+base_folder = raw_input("Type in your base folder:\n") #use input() for python 3
+all_folders = []
 print_jobs_devided = [[1,2,3,4,5], [1,2,3,4,5]] # each list max 15
 
 print "the base is: ", base_folder #use () for python 3
@@ -11,11 +10,28 @@ print "the base is: ", base_folder #use () for python 3
     #add first 15
     #when done, next 15
 
-#scan for folders
-    #add folder to all folders
+def scan_dir(directory):    
+    for dirs in os.walk(directory):
+        for dir in dirs:
+            all_folders.append(dir)
+    
+scan_dir("All folders:\n" + all_folders)
 
-#scan folders for files
-    #add files to print jobs all
+print(all_folders)
+
+def scan_files(directories):
+    container_all = []
+    for directory in directories:
+        for files in os.walk(directory):
+            for file in files:
+                container_all.append(directory + "/" + file)
+    return container_all
+
+print_jobs_all = scan_files(all_folders)
+
+print("All files:\n" + print_jobs_all)
+
+#add files to print jobs all
 
 #split jobs
     #split to 15 max list
