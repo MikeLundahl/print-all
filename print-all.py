@@ -1,38 +1,67 @@
 #Python 3
-import os
+from interfaces.UiInterface import UiInterface
+from interfaces.LocalSystem import LocalSystem
+from interfaces.PrinterInterface import PrinterInterface
+from utils.Sorting import Sorting
+from pynput.keyboard import Key, Listener
+import asyncio
+import time
 
-base_folder = input("Type in your base folder:\n")
-all_folders = []
-print_jobs_devided = [[1,2,3,4,5], [1,2,3,4,5]] # each list max 15
+def main():
+    MAX_PRINT_JOBS = 15
+    PRINTER = PrinterInterface.get_default_printer()
+    HPRINTER = PrinterInterface.get_printer_handle(PRINTER)
 
-print ("the base is: ", base_folder)
+    base_folder = input("Type in your base folder:\n")
+    print_jobs_all = LocalSystem.scan_dir(base_folder)
+    print_jobs_divided = list(Sorting.split_print_jobs(print_jobs_all, MAX_PRINT_JOBS))
+    is_printing = False
 
-#add to print queue
-    #add first 15
-    #when done, next 15
+    def get_current_print_queue(printer_handle):
+        print_jobs = PrinterInterface.get_printer_queue(printer_handle)
+        return print_jobs
 
-def scan_dir(directory):    
-    for dirs in os.walk(directory):
-        for dir in dirs:
-            all_folders.append(dir)
-    
-scan_dir("All folders:\n" + all_folders)
+    def init_printing(jobs):
+        is_printing = True
+        for index, chunk in enumerate(jobs):
+            current_chunk = index + 1
+                        
+            while get_current_print_queue(HPRINTER):
+                UiInterface.update_cli("Documents left before next chunk: " + str(len(get_current_print_queue(HPRINTER))))
+                time.sleep(2)
 
-print(all_folders)
+            print("Now printing chunk #" + str(current_chunk))
 
-def scan_files(directories):
-    container_all = []
-    for directory in directories:
-        for files in os.walk(directory):
-            for file in files:
-                container_all.append(directory + "/" + file)
-    return container_all
+            for file in chunk:
+                PrinterInterface.send_to_print_queue(file)
+                print("File sent to print queue: " + file)
+                time.sleep(3)
+            
+            UiInterface.show_files_in_chunk_end()
+            time.sleep(5)
 
-print_jobs_all = scan_files(all_folders)
+    def press_on(key):
+        print('pressed ' + str(key))
+        if str(key) == "'q'":
+            return False
+        if key == Key.enter:
+            
+            if is_printing:
+                return
 
-print("All files:\n" + print_jobs_all)
+            init_printing(print_jobs_divided)
+            return
+        if str(key) == "'s'":
+            UiInterface.show_documents_list(print_jobs_divided)
+            UiInterface.show_instructions()
+            return 
 
-#add files to print jobs all
+    print("^" * 50)
+    UiInterface.show_documents_information(print_jobs_all, print_jobs_divided)
+    print("Default printer: " + PRINTER)
+    UiInterface.show_instructions()
 
-#split jobs
-    #split to 15 max list
+    with Listener(on_press = press_on) as listener:
+        listener.join()
+
+main()
