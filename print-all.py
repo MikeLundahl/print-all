@@ -39,11 +39,24 @@ def main():
             
             UiInterface.show_files_in_chunk_end()
             time.sleep(5)
+    
+    def cancel_printing():
+        current_queue = get_current_print_queue(HPRINTER)
+
+        for job in current_queue:
+            PrinterInterface.cancel_print_jobs(HPRINTER, job)
+        
+        PrinterInterface.close_printer(HPRINTER)
 
     def press_on(key):
         print('pressed ' + str(key))
         if str(key) == "'q'":
+            if is_printing:
+                cancel_printing()
+                UiInterface.show_instructions()
+                return
             return False
+        
         if key == Key.enter:
             
             if is_printing:
@@ -51,6 +64,7 @@ def main():
 
             init_printing(print_jobs_divided)
             return
+        
         if str(key) == "'s'":
             UiInterface.show_documents_list(print_jobs_divided)
             UiInterface.show_instructions()

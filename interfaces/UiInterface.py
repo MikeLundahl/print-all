@@ -22,4 +22,4 @@ class UiInterface:
     print("Press ENTER to continue | S to show list of files | Q to cancel")
   
   def update_cli(updateText):
-    print("\r{}".format(updateText), end="")
+    print("\r{}".format(updateText) + "     ", end="")
