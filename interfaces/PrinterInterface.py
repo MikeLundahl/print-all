@@ -17,9 +17,9 @@ class PrinterInterface:
     win32api.ShellExecute(0, "print", file, None,  ".",  0)
 
   def cancel_print_jobs(printer_handle, job_info):
-    job_info_level = 1
+    job_info_level = 0
     job_command = win32print.JOB_CONTROL_DELETE
-    win32print.SetJob(printer_handle, job_info["jobIb"], job_info_level, job_info, job_command)
+    win32print.SetJob(printer_handle, job_info["JobId"], job_info_level, None, job_command)
 
   def close_printer(printer_handle):  
     win32print.ClosePrinter(printer_handle)
