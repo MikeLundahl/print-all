@@ -1,5 +1,5 @@
 # PRINT-ALL (for Microsoft Windows)
-A CLI app that prints all documents in specified folder and its sub-folders.
+A CLI app that prints all documents in specified folder and its sub-folders. Feel free to clone this repo or download the latest release.
 
 #### Prerequisite
 * Make sure to have Python 3 installed
@@ -9,11 +9,12 @@ A CLI app that prints all documents in specified folder and its sub-folders.
 * [pynput](https://pypi.org/project/pynput/)
 * pywin32
 
-`pip install pynput`
-`pip install pywin32`
+```pip install pynput```
+
+```pip install pywin32```
 
 #### Instructions
-1. Run the printall.py file `python print-all.py`
+1. Run the print-all.py file `python print-all.py`
 2. When asked, write the path to your documents you want to print.
 3. Select the printer
 4. Wait for the documents to print or pres 'Esc' to cancel
