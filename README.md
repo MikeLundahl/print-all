@@ -1,5 +1,5 @@
 # PRINT-ALL (for Microsoft Windows)
-A CLI app that prints all documents in specified folder and its sub-folders. Feel free to clone this repo or download the latest release.
+A free Python based CLI app that prints all documents in specified folder and its sub-folders. Feel free to clone this repo or download the latest release.
 
 #### Prerequisite
 * Make sure to have Python 3 installed
@@ -7,7 +7,7 @@ A CLI app that prints all documents in specified folder and its sub-folders. Fee
 
 #### Dependencies
 * [pynput](https://pypi.org/project/pynput/)
-* pywin32
+* [pywin32](https://pypi.org/project/pywin32/)
 
 ```pip install pynput```
 
