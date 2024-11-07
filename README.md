@@ -4,6 +4,7 @@ A free Python based CLI app that prints all documents in specified folder and it
 #### Prerequisite
 * Make sure to have Python 3 installed
 * Make sure you set a defult app for the documents you want to print.
+* Make sure you have a default printer selected
 
 #### Dependencies
 * [pynput](https://pypi.org/project/pynput/)
